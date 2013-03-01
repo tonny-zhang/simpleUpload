@@ -141,5 +141,6 @@ simpleUpload
 	* container (appendTo传入的flash的容器)
 	* *flashObj (flash的JQuery对象)*
 
+
 ##有问题和Bug怎么办？
 　　有任何问题和Bug都欢迎到[New Issue](https://github.com/tonny-zhang/simpleUpload/issues/new)进行交流。
