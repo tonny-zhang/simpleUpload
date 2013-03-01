@@ -2,7 +2,9 @@ simpleUpload
 ============
 
 　　SimpleUpload是借助JS和flash(AS3)写的上传组件，用于解决浏览器不支持多文件上传（现在HTML5已经逐渐支持）和客户端文件压缩的功能。
+
 　　内部flash的定位及上传进度条的控制是基于JQuery的。
+
 　　可使用Uglify进行压缩，参考[compress.js](https://github.com/tonny-zhang/nodeJS/tree/master/uglifyJS_compress)
 ## 如何用？
 
