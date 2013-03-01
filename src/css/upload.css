@@ -1,0 +1,52 @@
+.upload_progress{
+	position:absolute;
+	top:120px;
+	left:100px;
+	background-color:#bbb;
+	padding-bottom:1px;
+}
+.upload_progress li{
+	vertical-align:bottom;
+	position:relative;
+	width:200px;
+	height:25px;
+	background-color:white;
+	margin:1px 1px 0;
+}
+.upload_progress li span{
+	position:absolute;
+	height:16px;
+	padding:3px 0;
+	z-index:102;
+	top:0px;
+}
+.upload_filename{
+	left:3px;
+	width:130px;
+	white-space: nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	--ms-text-overflow: ellipsis;
+}
+.upload_close{
+	right:3px;
+	cursor:pointer;
+}
+.upload_progress .upload_progressbar{
+	top:1px;
+	height:23px;
+	padding:0;
+	left:1px;
+	background-color:#ff9;
+	z-index:101;
+	width:0px;
+}
+.upload_status{
+	right:20px;
+	width:50px;
+	text-align:center;
+}
+.upload_cancel_btn{
+	float:right;
+	margin-top:2px;
+}
