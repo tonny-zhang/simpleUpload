@@ -152,7 +152,7 @@
 				alert('请选择正确的文件类型');
 			}
 			,cancel: function(index){
-				this.getFlash().cancel(index);
+				(isMicrosoft?window:document)[this.name].cancel(index);
 			}
 			,cancelSuccess: function(fileName){
 				var self = this;
@@ -324,9 +324,6 @@
 			_errorConfig.call(self,'btn');
 		};
 		return self;
-	}
-	uploadProp.getFlash = function(){
-		return (isMicrosoft?window:document)[this.name];
 	}
 	global[flashCallbackName] = function(flashName/*,fnName,args*/){
 		Util.log.apply(null,Util.slice(arguments));
