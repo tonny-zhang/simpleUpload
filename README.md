@@ -61,8 +61,9 @@ simpleUpload
 **约定：斜体的API及属性不提倡使用**
 * API
 	* config (配置参数)
+
 		```
-		uploadObj
+		uploadObj 
 		.config('swf', '../flash/index.swf')
 		.config('uploadUrl','../extra/upload.html')
 		.config('btn',btn)
@@ -73,6 +74,7 @@ simpleUpload
 		})
 		```
 	* on (定制事件)
+
 		```
 		uploadObj
 		.on('mouseEnter',function(){
@@ -104,31 +106,40 @@ simpleUpload
 		```
 	* off (关闭事件)
 	* emit (触发事件)
+
 		emit(eventName,eventData[,eventData...])
+
 		```
 		uploadObj
 		.emit('getFiles',[{"name": "072136xIK.jpg","index":0},{"name": "测试.jpg","index":1}])
 		.emit('uploadProcess','1',0.45);
 		```
 	* appentTo (将flash添加到指定容器)
+
 		强制使用此方法，若不使用或参数不正确，内部会触发error事件
 	* resetPos
-	　　当初始化时按钮的形态（位置、尺寸）发生变化时，可以用此方法调整flash的位置和尺寸。
-		要求必须配置btn和调用appendTo方法，融内部会触发error事件
-		```
+
+	　　当初始化时按钮的形态（位置、尺寸）发生变化时，可以用此方法调整flash的位置和尺寸。要求必须配置btn和调用appendTo方法，融内部会触发error事件。
+		
 		uploadObj.resetPos();
-		```
 	* *initEvent (初始化内部事件)*
+
 		**!!不提倡使用**
 		这里定义了默认的进度条事件，若不想使用可在使用前将基设置成空函数
 * 属性
 	* uploadedFiles (上传完的图片信息，initEvent定义的事件里初始化)
 	* name　(当前Upload实例的名称)
+
 		为满足同时使用多个上传组件，数据及事件缓存都是基于此属性
 	* setting (当前Upload实例的配置)
 	* *processTmpl (进度条JQuery对象)*
+
 		**为内部操作方便，缓存的数据,也是基于initEvent**
 	* *processFiles (进度条每个文件List的JQuery对象)*
+
 		**为内部操作方便，缓存的数据,也是基于initEvent**
 	* container (appendTo传入的flash的容器)
 	* *flashObj (flash的JQuery对象)*
+
+##有问题和Bug怎么办？
+　　有任何问题和Bug都欢迎到[New Issue](https://github.com/tonny-zhang/simpleUpload/issues/new)进行交流。
