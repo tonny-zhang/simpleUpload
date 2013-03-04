@@ -1,0 +1,235 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Simpleupload</title>
+  <meta name="description" content="upload component with flash or html">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Simpleupload</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">upload component with flash or html</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/tonny-zhang/simpleUpload/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/tonny-zhang/simpleUpload/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/tonny-zhang/simpleUpload" class="code">View Simpleupload on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>simpleUpload</h1>
+
+<p>　　SimpleUpload是借助JS和flash(AS3)写的上传组件，用于解决浏览器不支持多文件上传（现在HTML5已经逐渐支持）和客户端文件压缩的功能。</p>
+
+<p>　　内部flash的定位及上传进度条的控制是基于JQuery的。</p>
+
+<p>　　可使用Uglify进行压缩，参考<a href="https://github.com/tonny-zhang/nodeJS/tree/master/uglifyJS_compress">compress.js</a></p>
+
+<h2>如何用？</h2>
+
+<p>1.引入脚本及样式</p>
+
+<pre><code>&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="../src/upload.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="../src/css/reset.css"&gt;&lt;/link&gt;
+&lt;link rel="stylesheet" type="text/css" href="../src/css/upload.css"&gt;&lt;/link&gt;
+</code></pre>
+
+<p>2.初始化</p>
+
+<pre><code>    var uploadObj = new Upload();
+    uploadObj
+    .on('mouseEnter',function(){
+        btn.css('background-color','red');
+    })
+    .on('mouseLeave',function(){
+        btn.css('background-color','');
+    })
+    .on('mouseDown',function(){
+        btn.css('background-color','green');
+    })
+    .on('mouseUp',function(){
+        btn.css('background-color','black');
+    })
+    .on('error',function(err){//错误统一调用,包括配置错误，如：没有配置url（造成无法上传数据）
+        console.log('自定义error事件：',err);
+    })
+    .on('uploadCompleteAll',function(files){
+        console.log('上传的图片为：',files,files.length);
+    })
+    .on({
+        'getFiles': function(flashName,files){
+
+        },
+        'toMaxFiles': function(){
+
+        }
+    })
+    .config('swf', '../flash/index.swf')
+    .config('uploadUrl','../extra/upload.html')
+    .config('btn',btn)
+    .config({
+        'thumbnailQuality': 100,
+        'thumbnailWidth': 100,
+        'thumbnailHeight': 100
+    })
+    .appendTo($('body'))//缓存容器,调用resetPos
+</code></pre>
+
+<h2>有哪些API?</h2>
+
+<p><strong>约定：斜体的API及属性不提倡使用</strong></p>
+
+<ul>
+<li>
+<p>API</p>
+
+<ul>
+<li>
+<p>config (配置参数)</p>
+
+<pre><code>uploadObj 
+.config('swf', '../flash/index.swf')
+.config('uploadUrl','../extra/upload.html')
+.config('btn',btn)
+.config({
+    'thumbnailQuality': 100,
+    'thumbnailWidth': 100,
+    'thumbnailHeight': 100
+})
+</code></pre>
+</li>
+<li>
+<p>on (定制事件)</p>
+
+<pre><code>uploadObj
+.on('mouseEnter',function(){
+    btn.css('background-color','red');
+})
+.on('mouseLeave',function(){
+    btn.css('background-color','');
+})
+.on('mouseDown',function(){
+    btn.css('background-color','green');
+})
+.on('mouseUp',function(){
+    btn.css('background-color','black');
+})
+.on('error',function(err){//错误统一调用,包括配置错误，如：没有配置url（造成无法上传数据）
+    console.log('自定义error事件：',err);
+})
+.on('uploadCompleteAll',function(files){
+    console.log('上传的图片为：',files,files.length);
+})
+.on({
+    'getFiles': function(flashName,files){
+
+    },
+    'toMaxFiles': function(){
+
+    }
+})
+</code></pre>
+</li>
+<li><p>off (关闭事件)</p></li>
+<li>
+<p>emit (触发事件)</p>
+
+<p>emit(eventName,eventData[,eventData...])</p>
+
+<pre><code>uploadObj
+.emit('getFiles',[{"name": "072136xIK.jpg","index":0},{"name": "测试.jpg","index":1}])
+.emit('uploadProcess','1',0.45);
+</code></pre>
+</li>
+<li>
+<p>appentTo (将flash添加到指定容器)</p>
+
+<p>强制使用此方法，若不使用或参数不正确，内部会触发error事件</p>
+</li>
+<li><p>resetPos</p></li>
+</ul>
+<p>　　当初始化时按钮的形态（位置、尺寸）发生变化时，可以用此方法调整flash的位置和尺寸。要求必须配置btn和调用appendTo方法，融内部会触发error事件。</p>
+
+<pre><code>uploadObj.resetPos();
+</code></pre>
+
+<ul>
+<li>
+<p><em>initEvent (初始化内部事件)</em></p>
+
+<p><strong>!!不提倡使用</strong>
+这里定义了默认的进度条事件，若不想使用可在使用前将基设置成空函数</p>
+</li>
+</ul>
+</li>
+<li>
+<p>属性</p>
+
+<ul>
+<li>uploadedFiles (上传完的图片信息，initEvent定义的事件里初始化)</li>
+<li>
+<p>name　(当前Upload实例的名称)</p>
+
+<p>为满足同时使用多个上传组件，数据及事件缓存都是基于此属性</p>
+</li>
+<li><p>setting (当前Upload实例的配置)</p></li>
+<li>
+<p><em>processTmpl (进度条JQuery对象)</em></p>
+
+<p><strong>为内部操作方便，缓存的数据,也是基于initEvent</strong></p>
+</li>
+<li>
+<p><em>processFiles (进度条每个文件List的JQuery对象)</em></p>
+
+<p><strong>为内部操作方便，缓存的数据,也是基于initEvent</strong></p>
+</li>
+<li><p>container (appendTo传入的flash的容器)</p></li>
+<li><p><em>flashObj (flash的JQuery对象)</em></p></li>
+</ul>
+</li>
+</ul><h2>有问题和Bug怎么办？</h2>
+
+<p>　　有任何问题和Bug都欢迎到<a href="https://github.com/tonny-zhang/simpleUpload/issues/new">New Issue</a>进行交流。</p>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/tonny-zhang" class="avatar"><img src="https://secure.gravatar.com/avatar/5a271229d44a3fedb1c085ffba3004ae?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/tonny-zhang">tonny-zhang</a> maintains <a href="https://github.com/tonny-zhang/simpleUpload">Simpleupload</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/tonny-zhang/simpleUpload/tarball/master" class="tar">tar</a><a href="https://github.com/tonny-zhang/simpleUpload/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
