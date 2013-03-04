@@ -224,7 +224,11 @@
 						self.emit('cancelSuccess').emit('error',imgInfo);//这里最好返回{type:xx,msg:xx}
 					}
 				}else{//全部上传完成
-					self.emit('cancelSuccess').emit('uploadCompleteAll',self.uploadedFiles);
+					self.emit('cancelSuccess');
+					var uploadFiles = self.uploadedFiles;
+					if(uploadedFiles && uploadedFiles.length > 0){//上传全部文件有上传成功的，触发uploadCompleteAll事件
+						self.emit('uploadCompleteAll',uploadedFiles);
+					}
 				}
 			},
 			uploadError: function(fileName,type,msg){
