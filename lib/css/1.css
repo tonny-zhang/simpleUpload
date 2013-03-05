@@ -1,0 +1,50 @@
+body{
+	width: 960px;
+	margin: 0 auto;
+	padding:10px 0;
+}
+pre.prettyprint {
+  border-radius: 5px;
+}
+h1,h2,h3{
+	font-weight: bold;
+}
+h1{
+	font-size: 22px;
+	margin: 10px 0;
+}
+h2{
+	font-size: 20px;
+	margin: 8px 0;
+}
+h2{
+	font-size: 16px;
+	margin: 4px 0;
+}
+.border_bottom{
+	border-bottom:3px solid #ccc;
+}
+p{
+	text-indent: 25px;
+	padding: 10px;
+	line-height: 20px;
+}
+.show_btn{
+	float:left;
+	display: inline;
+	margin-right: 10px;
+	width:150px;
+}
+.show_code{
+	float:left;
+	display: inline;
+	width:800px;
+}
+.btn_example{
+	border:1px solid #ccc;
+	text-align: center;
+	width:120px;
+	height:30px;
+	line-height:30px;
+	cursor: pointer;
+}

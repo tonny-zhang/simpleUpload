@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="Author" content="tonny zhang"/>
+		<meta name="Keywords" content="SimpleUpload,upload,文件上传"/>
+		<meta name="Description" content="flash多文件上传，可自定义事件，自定义模拟数据"/>
+		<link rel="stylesheet" type="text/css" href="../lib/css/reset.css"></link>
+		<link rel="stylesheet" type="text/css" href="../disc/css/upload.css"></link>
+		<link rel="stylesheet" type="text/css" href="../lib/css/prettify.css"></link>
+		<link rel="stylesheet" type="text/css" href="../lib/css/1.css"></link>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../src/upload.js"></script>
+		<script type="text/javascript" src="../lib/js/prettify.js"></script>
+	</head>
+	<body>
+		<h1>SimpleUpload</h1>
+		<p>SimpleUpload的使用场景如下：</p>
+		<h2>最简单用法</h2>
+		<div class="clearfix border_bottom">
+			<div class="show_btn">
+				<div id="btn_simple" class="btn_example">按钮</div>
+			</div>
+			<div class="show_code">
+<pre class="prettyprint"><code>
+var uploadObj = new Upload()
+.config({
+	'swf': '../flash/index.swf',
+	'btn': $('#btn_simple'),	//这里必须配置此参数，否则会触发error事件
+	'uploadUrl': '../extra/upload.html'
+	/*
+	,'swfVersion'		//flash的版本号
+	,'fileType'			//文件类型,flash里默认为"*.jpg;*.gif;*.png"
+	,'allowFileSize'	//允许上传的文件大小,flash里默认为6m
+	,'noCompressUnderSize' //小于这个大小时不压缩,flash里默认为 300k
+	,'allowFileNum' 	//允许上传的最大数量,flash里默认为 6
+	,'fileName'			//上传文件的字段名,flash里默认为 imagefile
+	,'minWidth'			//上传图片的最小宽度，不设置或０时不限制
+	,'minHeight'		//上传图片的最小高度，不设置或０时不限制
+	,'thumbnailWidth'	//上传图片生成的缩略图的宽度，对上传图片宽度有较高要求时进行设置
+	,'thumbnailHeight'	//上传图片生成的缩略图的高度，对上传图片宽度有较高要求时进行设置
+	,'thumbnailQuality'	//上传图片生成的缩略图的质量，对上传图片宽度有较高要求时进行设置，flash默认为80,[1-100]
+	*/
+})
+.appendTo($('body'));//必须在调用resetPos方法前配置此参数，否则会触发error事件
+</code></pre>
+			</div>
+		</div>
+		<h2>更新上传按钮位置</h2>
+		<div class="clearfix border_bottom">
+			<div class="show_btn">
+				<div id="btn_reset_example" class="btn_example hide">原来按钮</div>
+				<div id="btn_reset" class="btn_example">点击更新</div>
+			</div>
+			<div class="show_code">
+<pre class="prettyprint"><code>
+var btn = $('#btn_reset_example');
+var uploadObj = new Upload()
+.config({
+	'swf': '../flash/index.swf',
+	'btn': btn,	
+	'uploadUrl': '../extra/upload.html'
+})
+.appendTo($('body'));//必须在调用resetPos方法前配置此参数，否则会触发error事件
+$('#btn_reset').click(function(){
+	btn.show().css('margin-bottom',10);
+	uploadObj.resetPos();//如果不调用此方法，flash的定位会出问题
+});
+</code></pre>
+			</div>
+		</div>
+		<h2>鼠标事件</h2>
+		<div class="clearfix border_bottom">
+			<div class="show_btn">
+				<div id="btn_mouse_event" class="btn_example">鼠标效果</div>
+			</div>
+			<div class="show_code">
+<pre class="prettyprint"><code>
+/*当原始按钮有鼠标移上、移出、按下、按起事件时，可以通过这里进行模拟*/
+var btn = $('#btn_mouse_event')
+var uploadObj = new Upload()
+.config({
+	'swf': '../flash/index.swf',
+	'btn': btn,
+	'uploadUrl': '../extra/upload.html'
+})
+.on({
+	mouseEnter: function(){
+		btn.css('background-color','red')
+	},
+	mouseLeave: function(){
+		btn.css('background-color','')
+	},
+	mouseDown: function(){
+		btn.css('background-color','black')
+	},
+	mouseUp: function(){
+		btn.css('background-color','green')
+	}
+})
+.appendTo($('body'));
+</code></pre>
+			</div>
+		</div>
+		<h2>自定义其它事件</h2>
+		<div class="clearfix border_bottom">
+			<div class="show_btn">
+				<div id="btn_self_event" class="btn_example">自定义其它事件</div>
+				<div id="self_event_result"></div>
+			</div>
+			<div class="show_code">
+<pre class="prettyprint"><code>
+var btn = $('#btn_self_event');
+var resultDiv = $('#self_event_result');
+var uploadObj = new Upload()
+.config({
+	'swf': '../flash/index.swf',
+	'btn': btn,
+	'uploadUrl': '../extra/upload.html'
+})
+.on({
+	mouseEnter: function(){
+		btn.css('background-color','red')
+	},
+	mouseLeave: function(){
+		btn.css('background-color','')
+	},
+	mouseDown: function(){
+		btn.css('background-color','black')
+	},
+	mouseUp: function(){
+		btn.css('background-color','green')
+	}
+})
+.on('error',function(){
+	alert('on error by myself');
+})
+.on({
+	uploadCompleteAll: function(files){
+		var arr = [];
+		$(files).each(function(i,v){
+			arr.push(v.src);
+		});
+		resultDiv.html(arr.join(','));
+	}
+})
+.appendTo($('body'));
+</code></pre>
+			</div>
+		</div>
+		<h2>模拟上传数据</h2>
+		<div class="clearfix border_bottom">
+			<div class="show_btn">
+				<div id="btn_sham_upload_info" class="btn_example">模拟上传数据</div>
+				<div id="sham_upload_info_result"></div>
+			</div>
+			<div class="show_code">
+<pre class="prettyprint"><code>
+var btn = $('#btn_sham_upload_info');
+var resultDiv = $('#sham_upload_info_result');
+var uploadObj = new Upload()
+.config({
+	'swf': '../flash/index.swf',
+	'btn': btn,
+	'uploadUrl': '../extra/upload.html'
+})
+.on({
+	mouseEnter: function(){
+		btn.css('background-color','red')
+	},
+	mouseLeave: function(){
+		btn.css('background-color','')
+	},
+	mouseDown: function(){
+		btn.css('background-color','black')
+	},
+	mouseUp: function(){
+		btn.css('background-color','green')
+	}
+})
+.on('error',function(){
+	alert('on error by myself');
+})
+//这里模拟上传数据
+.on('shamUploadInfo',function(e){
+	var fileName = (e && e.target && e.target.name) || Math.random()+'.jpg';
+	return '{"src": "'+fileName+'"}';
+})
+.on({
+	uploadCompleteAll: function(files){
+		var arr = [];
+		$(files).each(function(i,v){
+			arr.push(v.src);
+		});
+		resultDiv.html(arr.join(','));
+	}
+})
+.appendTo($('body'));
+</code></pre>
+			</div>
+		</div>
+		<script>
+		$('.prettyprint code').each(function(){
+			var $this = $(this);
+			var code = $this.html();
+			if(code){
+				new Function(code.replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&amp;/g,'&')).call(this);
+			}
+		});
+
+		$(prettyPrint);
+		</script>
+	</body>
+</html>
