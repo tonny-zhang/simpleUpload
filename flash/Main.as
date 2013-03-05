@@ -29,7 +29,7 @@
 			'noCompressUnderSize' : 300*1024,		//当文件大小小于这个值时也不会压缩尺寸，默认300k
 			'allowFileNum' : 6,						//本次会话允许上传的最大数量
 			'fileName' : 'imagefile',				//上传图片时的字段名
-			'uploadUrl' : 'http://git.zk.com/simpleUpload/extra/upload.html',//上传路径
+			'uploadUrl' : 'http://git.zk.com/simpleUpload/extra/upload1.html',//上传路径
 			'extraParam' : null,					//上传
 			'cb': 'upload_cb'
 		};
