@@ -225,7 +225,7 @@
 					}
 				}else{//全部上传完成
 					self.emit('cancelSuccess');
-					var uploadFiles = self.uploadedFiles;
+					var uploadedFiles = self.uploadedFiles;
 					if(uploadedFiles && uploadedFiles.length > 0){//上传全部文件有上传成功的，触发uploadCompleteAll事件
 						self.emit('uploadCompleteAll',uploadedFiles);
 					}
@@ -253,40 +253,48 @@
 	}
 	/*定义事件*/
 	uploadProp.on = function(eventName,fn){
+		var self = this;
 		var events = {}
 		if(fn){
 			events[eventName] = fn;
 		}else{
 			events = eventName;
 		}
-		var selfEvent = this.events || (this.events = {});
+		var selfEvent = self.events || (self.events = {});
 		for(var i in events){
 			(selfEvent[i] || (selfEvent[i] = [])).push(events[i]);
 		}
-		return this;
+		return self;
 	}
 	/*关闭事件*/
 	uploadProp.off = function(eventName,fn){
+		var self = this;
 		if(fn){
-			var selfEvent = this.events[eventName];
+			var selfEvent = self.events[eventName];
 			for(var i = selfEvent.length;i>0;i--){
 				if(selfEvent[i-1] == fn){
 					selfEvent.splice(i-1,1);
 				}
 			}
 		}else{
-			delete this.events[eventName];
+			delete self.events[eventName];
 		}
-		return this;
+		return self;
 	}
 	/*触发事件*/
 	uploadProp.emit = function(eventName/*,args..*/){
-		var selfEvent = this.events[eventName] || [];
+		var self = this;
+		var selfEvent = self.events[eventName] || [];
 		var data = Util.slice(arguments,1);
+		var temp_val = [];
 		for(var i = 0,j=selfEvent.length;i<j;i++){//保证执行顺序
-			selfEvent[i].apply(this,data);
+			var temp = selfEvent[i].apply(self,data);
+			temp && temp_val.push(temp);
 		}
-		return this;
+		if(temp_val.length > 0){			
+			self.tempEventReturn = temp_val;//临时存放事件的返回值数据
+		}
+		return self;
 	}
 	uploadProp.appendTo = function(ele){
 		var self = this,setting = self.setting;
@@ -296,7 +304,7 @@
 				_errorConfig.call(self,'uploadUrl');
 			}else{
 				var flashObj = $(Util.getFlashHtml(self.name,0,0,setting)).css({'position': 'absolute','z-index': 99});
-				self.container = $(ele).append((this.flashObj = flashObj)).css('position','relative');
+				self.container = $(ele).append((self.flashObj = flashObj)).css('position','relative');
 				self.resetPos();
 			}
 		}else{
@@ -332,10 +340,15 @@
 	global[flashCallbackName] = function(flashName/*,fnName,args*/){
 		Util.log.apply(null,Util.slice(arguments));
 		var upload = uploadCache[flashName];
-		upload && upload.emit.apply(upload,Util.slice(arguments,1));
+		if(upload){
+			upload.emit.apply(upload,Util.slice(arguments,1));
+			return upload.tempEventReturn;
+		}
 	}
 	global[variableName] = Upload;
-	//用于测试
-	global['Util'] = Util;
-	global.uploadCache = uploadCache;
+	if(debug){			
+		//用于测试
+		global['Util'] = Util;
+		global.uploadCache = uploadCache;
+	}
 })(this);

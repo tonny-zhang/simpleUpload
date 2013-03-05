@@ -22,6 +22,7 @@
 		public static var EVENT_AFTER_COMPRESS = 'afterCompress';
 		public static var EVENT_CANCEL_SUCCESS = 'cancelSuccess';
 
+		public static var EVENT_SHAM_UPLOAD_INFO = 'shamUploadInfo';
 		private var handleName:String = 'cb';
 		private var movieName = '';
 		
@@ -34,7 +35,7 @@
 			arguments.unshift(this.movieName);
 			arguments.unshift(this.handleName);
 			Debug.log(arguments);
-			ExternalInterface.call.apply(null,arguments);
+			return ExternalInterface.call.apply(null,arguments);
 		}
 	}	
 }

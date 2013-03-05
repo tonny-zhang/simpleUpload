@@ -40,10 +40,10 @@
 			btn.css('background-color','black');
 		})
 		.on('error',function(err){//错误统一调用,包括配置错误，如：没有配置url（造成无法上传数据）
-			console.log('自定义error事件：',err);
+			Util.log('自定义error事件：',err);
 		})
 		.on('uploadCompleteAll',function(files){
-			console.log('上传的图片为：',files,files.length);
+			Util.log('上传的图片为：',files,files.length);
 		})
 		.on({
 			'getFiles': function(flashName,files){
@@ -55,6 +55,10 @@
 		})
 		//.config('swf', '../../flash/upload2/index.swf')
 		.config('swf', '../flash/index.swf')
+		.on('shamUploadInfo',function(e){
+			var fileName = (e && e.target && e.target.name) || Math.random()+'.jpg';
+			return '{"src": "'+fileName+'"}';
+		})
 		.config('uploadUrl','../extra/upload1.html')
 		.config('btn',btn)
 		.config({

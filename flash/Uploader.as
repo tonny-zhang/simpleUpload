@@ -116,7 +116,9 @@
 		/*上传安全出错*/
 		private function _handle_urlloader_security_error(e:SecurityErrorEvent){
 			_this._remove_upload_event();
-			_this.fileItem.errorMsg(State.ERROR_UPLOAD_FILE_SECURITY,'上传时出现安全错误');
+			if(!_this._shamUploadInfo(e)){
+				_this.fileItem.errorMsg(State.ERROR_UPLOAD_FILE_SECURITY,'上传时出现安全错误');
+			}
 		}
 		/*httpstatus改变*/
 		private function _handle_urlloader_httpstatus(e:HTTPStatusEvent){
@@ -125,9 +127,18 @@
 		/*io错误*/
 		private function _hand_urlloader_io_error(e:IOErrorEvent){
 			_this._remove_upload_event();
-			_this.fileItem.errorMsg(State.ERROR_UPLOAD_FILE_IO,'上传时出现IO错误');
+			if(!_this._shamUploadInfo(e)){
+				_this.fileItem.errorMsg(State.ERROR_UPLOAD_FILE_IO,'上传时出现IO错误');
+			}
 		}
-		
+		/*当出现错误时，可以调用JS里定义的虚假信息进行逻辑处理*/
+		private function _shamUploadInfo(e:ErrorEvent){
+			var jsReturnValue = jsCaller.callback(JsCaller.EVENT_SHAM_UPLOAD_INFO,e);
+			if(jsReturnValue){
+				_this.fileItem.completeDeal(jsReturnValue);
+			}
+			return jsReturnValue
+		}
 		/********* 上传报头用 start *********/
 		private static var _boundary:String;
 		private function getBoundary():String
