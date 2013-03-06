@@ -1,0 +1,96 @@
+body{
+	background-color: #f8f8f8;
+}
+pre.prettyprint {
+  border-radius: 5px;
+}
+h1,h2,h3{
+	font-weight: bold;
+}
+h1{
+	font-size: 22px;
+	margin: 10px 0;
+}
+h2{
+	font-size: 20px;
+	margin: 8px 0;
+}
+h2{
+	font-size: 16px;
+	margin: 4px 0;
+}
+.border_bottom{
+	border-bottom:3px solid #ccc;
+}
+p{
+	text-indent: 25px;
+	padding: 10px;
+	line-height: 20px;
+}
+.main{	
+	width: 960px;
+	margin: 0 auto;
+	padding:10px 0;
+}
+.show_btn{
+	float:left;
+	display: inline;
+	margin-right: 10px;
+	width:150px;
+}
+.show_code{
+	float:left;
+	display: inline;
+	width:800px;
+	overflow-x: auto;
+}
+.btn_example{
+	border:1px solid #ccc;
+	text-align: center;
+	width:120px;
+	height:30px;
+	line-height:30px;
+	cursor: pointer;
+}
+.float_layer1{
+	background:#e6f1f6;
+	padding:10px;
+	position: fixed;
+	left:10px;
+	top:10px;
+	width:150px;
+	border-radius: 5px;
+}
+.float_layer{
+	padding:10px;
+	position: fixed;
+	left:10px;
+	top:10px;
+	_position:absolute;
+	top:expression(eval(document.documentElement.scrollTop+10));
+	border-radius: 5px;
+	background-color: #f8f8f8;
+}
+.float_layer a{
+	display: block;
+	width: 100px;
+	text-align: center;
+	padding:8px 10px;
+	border: 1px solid #E5E5E5;
+	border-bottom: none;
+	color: #08C;
+	text-decoration: none;
+}
+.float_layer a:first-child{
+	border-radius: 5px 5px 0 0;
+}
+.float_layer a:last-child,
+.float_layer a.last{
+	border-radius: 0 0 5px 5px;
+	border-bottom: 1px solid #E5E5E5;
+}
+.float_layer a:hover{
+	color: #005580;
+	background-color: #f5f5f5;
+	text-decoration: none;
+}

@@ -48,3 +48,24 @@ textarea { overflow: auto; border: 1px solid #ccc; padding: 4px 3px; font-size: 
 select { padding: 2px; border: 1px solid #ccc;}
 button { width: auto; overflow: visible;line-height:1.2;}
 button::-moz-focus-inner { border: 0;padding: 0;}
+
+/* Clearfix */
+.clearfix:after {/* Clear Fix : :: 用于内部有浮动元素的元素，可以起到关闭浮动的作用 */
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	display: inline-block;
+}
+.clearfix {/* Hide from IE Mac */
+	display: block;
+}
+.hide{
+	display: none;
+}
+.show{
+	display: block;
+}

@@ -230,8 +230,9 @@
 						self.emit('uploadCompleteAll',uploadedFiles);
 					}
 				}
-			},
-			uploadError: function(fileName,type,msg){
+			}
+			,error: Util.log
+			,uploadError: function(fileName,type,msg){
 				this.failedNum++;
 				this.emit('error',{type:type,msg:msg});
 			}
