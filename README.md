@@ -6,7 +6,7 @@ simpleUpload
 　　内部flash的定位及上传进度条的控制是基于JQuery的。
 
 　　可使用Uglify进行压缩，参考[compress.js](https://github.com/tonny-zhang/nodeJS/tree/master/uglifyJS_compress)
-## 如何用？
+## 如何用？ 可参考：[用法示例](http://tonny-zhang.github.com/simpleUpload/docs/how-use.html?debug)
 
 1.引入脚本及样式
 

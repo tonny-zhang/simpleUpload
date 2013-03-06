@@ -14,8 +14,9 @@
 		<script type="text/javascript" src="../lib/js/prettify.js"></script>
 	</head>
 	<body>
+	<div class="main">
 		<h1>SimpleUpload</h1>
-		<p>SimpleUpload的使用场景如下：</p>
+		<p class="border_bottom">SimpleUpload的使用场景如下：</p>
 		<h2>最简单用法</h2>
 		<div class="clearfix border_bottom">
 			<div class="show_btn">
@@ -149,7 +150,7 @@ var uploadObj = new Upload()
 			</div>
 		</div>
 		<h2>模拟上传数据</h2>
-		<div class="clearfix border_bottom">
+		<div class="clearfix">
 			<div class="show_btn">
 				<div id="btn_sham_upload_info" class="btn_example">模拟上传数据</div>
 				<div id="sham_upload_info_result"></div>
@@ -199,16 +200,29 @@ var uploadObj = new Upload()
 </code></pre>
 			</div>
 		</div>
+	</div>
 		<script>
 		$('.prettyprint code').each(function(){
 			var $this = $(this);
-			var code = $this.html();
+			var code = $this.text();
 			if(code){
-				new Function(code.replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&amp;/g,'&')).call(this);
+				new Function(code).call(this);
 			}
 		});
 
 		$(prettyPrint);
+		$(function(){
+			var float_layer = $('<div>').addClass('float_layer').appendTo($('body'));
+			var anchor_name = 'example_';
+			var h2s = $('h2');
+			var totalLen = h2s.length;
+			h2s.each(function(i,v){
+				var temp_name = anchor_name + i;
+				var class_name = (i==totalLen-1)?'class="last"':'';
+				float_layer.append($('<a href="#'+temp_name+'" '+class_name+'>'+$(this).attr('id',temp_name).text()+'</a>'));
+			});
+
+		})
 		</script>
 	</body>
 </html>
